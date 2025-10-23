@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Registration</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="stylesheet" href="src/form.css" />
+  </head>
+  <body>
+    <header>
+      <img src="public/Covenant University.png" alt="" />
+      <div>
+        <h1>
+          Welcome to <span class="blue">Google</span>
+          <span class="red">Developer</span> <span class="yellow">Group</span>
+        </h1>
+        <p>Register below to become a member</p>
+      </div>
+    </header>
+
+    <main>
+      <form id="memberForm" class="form-container">
+        <h2>Member Registration Form</h2>
+
+        <label for="name">Full Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter your full name"
+          required
+        />
+
+        <label for="phone">phone number</label>
+        <input
+          type="text"
+          id="phone"
+          name="phone"
+          placeholder="09012345678"
+          required
+        />
+
+        <label for="track">Select Track</label>
+        <select id="track" name="track" required>
+          <option value="">-- Choose Track --</option>
+          <option value="Frontend Developer">Frontend Developer</option>
+          <option value="Backend Developer">Backend Developer</option>
+          <option value="UI/UX Designer">UI/UX Designer</option>
+          <option value="UI/UX Designer">Project Management</option>
+          <option value="UI/UX Designer">Game Development</option>
+          <option value="UI/UX Designer">Robotics</option>
+          <option value="UI/UX Designer">Mobile</option>
+          <option value="UI/UX Designer">Cybersecurity</option>
+        </select>
+
+        <button type="submit" class="btn-submit">Register</button>
+      </form>
+    </main>
+
+    <footer>
+      <p>
+        Admin Access →
+        <button id="adminBtn" class="btn-admin">Login</button>
+      </p>
+      <p>&copy; <span id="currentYear"></span> GDG</p>
+    </footer>
+
+    <script src="src/form.js"></script>
+    <script src="src/auth.js"></script>
+    <script src="src/main.js"></script>
+  </body>
+</html>

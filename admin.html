@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="stylesheet" href="src/admin.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Admin Dashboard</h1>
+      <button id="logoutBtn">Logout</button>
+    </header>
+    <div class="export-container">
+      <button id="exportCSV" class="btn">Download CSV</button>
+    </div>
+    <main class="dashboard">
+      <!-- Summary Cards -->
+      <section class="stats">
+        <div class="card">
+          <h3>Total Members</h3>
+          <p class="number" id="totalMembers">0</p>
+        </div>
+      </section>
+
+      <!-- Member Data Table -->
+      <section class="table-section">
+        <h2>Registered Members</h2>
+        <table id="memberTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>phone number</th>
+              <th>track</th>
+              <th>Date Registered</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- rows will be inserted by JS -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Charts / Stats -->
+      <section class="charts">
+        <h2>Member Statistics</h2>
+        <canvas class="chart" id="trackChart"></canvas>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="src/admin.js"></script>
+  </body>
+</html>
