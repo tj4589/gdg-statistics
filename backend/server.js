@@ -86,7 +86,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Health check endpoint
+// Health check endpoint for Render
 app.get("/health", (req, res) => {
   res.json({ 
     status: "healthy", 
