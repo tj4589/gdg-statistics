@@ -81,7 +81,7 @@ app.get("/", (req, res) => {
 
 // --- Start server ---
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   const env = process.env.RAILWAY_STATIC_URL || `http://localhost:${PORT}`;
   console.log(`🚀 Server running on ${env}`);
 });
