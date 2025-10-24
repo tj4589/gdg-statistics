@@ -6,7 +6,9 @@ let members = [];
 // ✅ Fetch members from backend instead of localStorage
 async function loadMembers() {
   try {
-    const res = await fetch("http://localhost:5000/api/members");
+    const res = await fetch(
+      "https://friendly-inspiration.up.railway.app/api/members"
+    );
     members = await res.json();
     displayMembers();
   } catch (error) {
@@ -129,9 +131,12 @@ loadMembers();
 async function deleteMember(id) {
   try {
     id = id.trim(); // ✅ remove hidden spaces/newlines
-    const res = await fetch(`http://localhost:5000/api/members/${id}`, {
-      method: "DELETE",
-    });
+    const res = await fetch(
+      `https://friendly-inspiration.up.railway.app/api/members/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (!res.ok) throw new Error("Failed to delete member");
 

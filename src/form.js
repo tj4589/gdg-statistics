@@ -22,11 +22,14 @@ form.addEventListener("submit", async (e) => {
 
   try {
     // ✅ Send data to backend (instead of saving to localStorage)
-    const res = await fetch("http://localhost:5000/api/members", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newMember),
-    });
+    const res = await fetch(
+      "https://friendly-inspiration.up.railway.app/api/members",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newMember),
+      }
+    );
 
     if (!res.ok) throw new Error("Failed to register member");
 
