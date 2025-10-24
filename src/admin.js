@@ -7,7 +7,7 @@ let members = [];
 async function loadMembers() {
   try {
     const res = await fetch(
-      "https://friendly-inspiration.up.railway.app/api/members"
+      "https://gdg-statistics-production.up.railway.app/api/members"
     );
     members = await res.json();
     displayMembers();
@@ -132,7 +132,7 @@ async function deleteMember(id) {
   try {
     id = id.trim(); // ✅ remove hidden spaces/newlines
     const res = await fetch(
-      `https://friendly-inspiration.up.railway.app/api/members/${id}`,
+      `https://gdg-statistics-production.up.railway.app/api/members/${id}`,
       {
         method: "DELETE",
       }
