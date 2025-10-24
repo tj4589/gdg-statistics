@@ -8,10 +8,6 @@ import dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config();
-import dotenv from "dotenv";
-
-// Load environment variables
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- Connect to MongoDB ---
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/membersDB";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://ekpokpobeoghenetejiri29_db_user:password45.@ac-8tdvxx4-shard-00-00.najqpg3.mongodb.net:27017,ac-8tdvxx4-shard-00-01.najqpg3.mongodb.net:27017,ac-8tdvxx4-shard-00-02.najqpg3.mongodb.net:27017/membersDB?ssl=true&replicaSet=atlas-14cxir-shard-0&authSource=admin&retryWrites=true&w=majority";
 
 mongoose
   .connect(MONGODB_URI, {
@@ -83,7 +79,20 @@ app.delete("/api/members/:id", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("✅ Server is running successfully!");
+  res.json({ 
+    status: "✅ Server is running successfully!", 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development"
+  });
+});
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ 
+    status: "healthy", 
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
+  });
 });
 
 // --- Start server ---
