@@ -1,5 +1,3 @@
-
-
 // backend/server.js
 import express from "express";
 import mongoose from "mongoose";
@@ -17,8 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- Connect to MongoDB ---
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://ekpokpobeoghenetejiri29_db_user:password45.@ac-8tdvxx4-shard-00-00.najqpg3.mongodb.net:27017,ac-8tdvxx4-shard-00-01.najqpg3.mongodb.net:27017,ac-8tdvxx4-shard-00-02.najqpg3.mongodb.net:27017/membersDB?ssl=true&replicaSet=atlas-14cxir-shard-0&authSource=admin&retryWrites=true&w=majority";
-
+const MONGODB_URI = process.env.MONGODB_URI;
 mongoose
   .connect(MONGODB_URI, {
     useNewUrlParser: true,
@@ -79,19 +76,19 @@ app.delete("/api/members/:id", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ 
-    status: "✅ Server is running successfully!", 
+  res.json({
+    status: "✅ Server is running successfully!",
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || "development"
+    environment: process.env.NODE_ENV || "development",
   });
 });
 
 // Health check endpoint for Render
 app.get("/health", (req, res) => {
-  res.json({ 
-    status: "healthy", 
+  res.json({
+    status: "healthy",
     uptime: process.uptime(),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 

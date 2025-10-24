@@ -1,6 +1,8 @@
 // Handles registration form submission
 const form = document.getElementById("memberForm");
 
+const API_BASE_URL = "https://gdg-statistics.onrender.com";
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -22,7 +24,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     // ✅ Send data to backend (instead of saving to localStorage)
-    const res = await fetch("http://localhost:5000/api/members", {
+    const res = await fetch(`${API_BASE_URL}/api/members`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMember),

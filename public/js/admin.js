@@ -3,10 +3,12 @@ const tbody = document.querySelector("#memberTable tbody");
 const rowsPerPage = 10;
 let members = [];
 
+const API_BASE_URL = "https://gdg-statistics.onrender.com";
+
 // ✅ Fetch members from backend instead of localStorage
 async function loadMembers() {
   try {
-    const res = await fetch("http://localhost:5000/api/members");
+    const res = await fetch(`${API_BASE_URL}/api/members`);
     members = await res.json();
     displayMembers();
   } catch (error) {
@@ -129,7 +131,7 @@ loadMembers();
 async function deleteMember(id) {
   try {
     id = id.trim(); // ✅ remove hidden spaces/newlines
-    const res = await fetch(`http://localhost:5000/api/members/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/api/members/${id}`, {
       method: "DELETE",
     });
 
@@ -142,7 +144,6 @@ async function deleteMember(id) {
     const index = members.findIndex((m) => m._id === id);
     if (index !== -1) {
       members.splice(index, 1);
-      localStorage.setItem("members", JSON.stringify(members));
       displayMembers();
     }
   } catch (err) {
