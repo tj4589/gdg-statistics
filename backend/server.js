@@ -2,6 +2,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,13 +17,10 @@ app.use(express.json());
 // If you're running MongoDB locally, make sure it's started.
 // Or use MongoDB Atlas connection string here:
 mongoose
-  .connect(
-    "mongodb://ekpokpobeoghenetejiri29_db_user:password45.@ac-8tdvxx4-shard-00-00.najqpg3.mongodb.net:27017,ac-8tdvxx4-shard-00-01.najqpg3.mongodb.net:27017,ac-8tdvxx4-shard-00-02.najqpg3.mongodb.net:27017/membersDB?ssl=true&replicaSet=atlas-14cxir-shard-0&authSource=admin&retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
