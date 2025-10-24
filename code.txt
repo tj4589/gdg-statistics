@@ -1,0 +1,323 @@
+code
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Statistics Dashboard</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <link rel="stylesheet" href="src/admin.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>Statistics Dashboard — HTML · CSS · JavaScript</h1>
+        <div style="margin-left: auto; color: var(--muted)">
+          Enter numbers separated by commas, spaces or new lines
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="card">
+          <label for="data">Data input</label>
+          <textarea
+            id="data"
+            placeholder="e.g. 12, 4, 5, 8, 15, 3, 3"
+          ></textarea>
+
+          <div class="controls">
+            <button id="calcBtn">Compute statistics</button>
+            <button class="secondary" id="clearBtn">Clear</button>
+            <button class="secondary" id="rndBtn">Generate random (20)</button>
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-left: 8px;
+                color: var(--muted);
+              "
+              ><input type="checkbox" id="sampleVar" /> Use sample
+              variance</label
+            >
+            <button class="secondary" id="copyBtn">Copy results</button>
+          </div>
+
+          <div class="stats" id="statsBox" aria-live="polite">
+            <div class="stat">
+              <label>Count</label><strong id="count">—</strong>
+            </div>
+            <div class="stat">
+              <label>Sum</label><strong id="sum">—</strong>
+            </div>
+            <div class="stat">
+              <label>Mean</label><strong id="mean">—</strong>
+            </div>
+            <div class="stat">
+              <label>Median</label><strong id="median">—</strong>
+            </div>
+            <div class="stat">
+              <label>Mode(s)</label><strong id="mode">—</strong>
+            </div>
+            <div class="stat">
+              <label>Variance</label><strong id="variance">—</strong>
+            </div>
+            <div class="stat">
+              <label>Std deviation</label><strong id="stddev">—</strong>
+            </div>
+            <div class="stat">
+              <label>Min / Max</label><strong id="minmax">—</strong>
+            </div>
+          </div>
+
+          <div class="chartwrap card" style="margin-top: 18px">
+            <label>Histogram</label>
+            <canvas
+              id="hist"
+              width="800"
+              height="220"
+              style="
+                width: 100%;
+                height: 220px;
+                border-radius: 8px;
+                background: transparent;
+              "
+            ></canvas>
+          </div>
+        </section>
+
+        <aside class="card">
+          <h3 style="margin: 0 0 8px 0">Details & Quick output</h3>
+          <pre
+            id="output"
+            style="
+              white-space: pre-wrap;
+              background: transparent;
+              border: 0;
+              color: var(--muted);
+            "
+          >
+No results yet.</pre
+          >
+
+          <div style="margin-top: 12px">
+            <label style="display: block; color: var(--muted)">Download</label>
+            <div style="display: flex; gap: 8px; margin-top: 8px">
+              <button id="downloadCsv">Download CSV</button>
+              <button class="secondary" id="downloadJson">Download JSON</button>
+            </div>
+          </div>
+
+          <hr
+            style="
+              margin: 12px 0;
+              border: none;
+              border-top: 1px solid rgba(255, 255, 255, 0.03);
+            "
+          />
+          <div style="color: var(--muted); font-size: 13px">
+            Features:
+            <ul style="margin: 6px 0 0 18px; color: var(--muted)">
+              <li>
+                Mean, median, mode(s), variance (sample/population), stddev
+              </li>
+              <li>Histogram with auto bins</li>
+              <li>Download results as CSV / JSON</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <script src="src/main.js"></script>
+    <script src="src/admin.js"></script>
+  </body>
+</html>
+css 
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#60a5fa;
+      --glass: rgba(255,255,255,0.03)
+    }
+    *{
+      box-sizing:border-box;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial
+    }
+    body{
+      margin:0;
+      min-height:100vh;
+      background:linear-gradient(180deg,#071029 0%, #071428 60%);
+      color:#e6eef6;
+      padding:28px
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto
+    }
+    header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:18px
+    }
+    h1{
+      font-size:20px;
+      margin:0
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:18px
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 6px 18px rgba(2,6,23,0.6)
+    }
+    textarea{
+      width:100%;
+      min-height:140px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      padding:12px;
+      border-radius:8px;
+      color:inherit;
+      resize:vertical
+    }
+    .row{display:flex;
+      gap:8px;
+      align-items:center
+    }
+    button{
+      background:var(--accent);
+      border:none;
+      padding:10px 12px;
+      border-radius:8px;
+      color:#05203a;
+      cursor:pointer;
+      font-weight:600
+    }
+    button.secondary{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.06);
+      color:var(--muted);
+      font-weight:600
+    }
+    .controls{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+      flex-wrap:wrap
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:12px
+    }
+    .stat{
+      background:var(--glass);
+      padding:12px;
+      border-radius:10px
+    }
+    .stat strong{
+      display:block;
+      font-size:18px
+    }
+    label{
+      font-size:13px;
+      color:var(--muted)
+    }
+    .chartwrap{
+      height:260px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border-radius:10px;
+      padding:10px;
+      margin-top:12px
+    }
+    footer{margin-top:12px;
+      color:var(--muted);
+      font-size:13px
+    }
+
+    @media (max-width:980px){.grid{grid-template-columns:1fr}.chartwrap{height:220px}}
+
+    js
+    header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2c7be5;
+  color: white;
+  padding: 15px 30px;
+}
+
+header button {
+  background: white;
+  color: #2c7be5;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+header button:hover {
+  background: #e3e9f7;
+}
+
+.dashboard {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.card {
+  flex: 1;
+  min-width: 200px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.table-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #f5f7fa;
+}
+
+.charts {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+}

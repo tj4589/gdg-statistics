@@ -1,0 +1,89 @@
+project
+│
+├── frontend
+│   ├── index.html              # Public page with member registration form + admin login button
+│   ├── admin-login.html        # Admin password login page
+│   ├── admin-dashboard.html    # Admin dashboard (charts, pictograms, data table)
+│   │
+│   ├── js
+│   │   ├── form.js             # Handles member registration form submission & local storage
+│   │   ├── admin-login.js      # Handles admin login authentication logic
+│   │   ├── admin-dashboard.js  # Loads member data, renders charts, pictograms, and stats
+│   │   ├── chart-config.js     # Optional handles Chart.js setup (clean separation)
+│   │   └── utils.js            # Reusable helper functions (e.g. getMembers, saveMembers)
+│   │
+│   ├── css
+│   │   ├── style.css           # General styles (layout, typography, colors)
+│   │   ├── form.css            # Styles for registration form
+│   │   ├── admin.css           # Dashboard layout & chartpictogram styling
+│   │   └── responsive.css      # Optional responsive design rules
+│   │
+│   └── assets
+│       ├── logo.png
+│       ├── icons
+│       │   ├── member.svg
+│       │   ├── admin.svg
+│       │   └── chart.svg
+│       └── fonts
+│
+└── backend
+    ├── server.js               # Express.js or Flask main entry point
+    │
+    ├── routes
+    │   ├── members.js          # Handle member registration, fetching, and updates
+    │   ├── admin.js            # Admin authentication & dashboard data APIs
+    │   └── stats.js            # Provides statistics for charts (role distribution, totals)
+    │
+    ├── controllers
+    │   ├── memberController.js # Logic for saving and retrieving member data
+    │   ├── adminController.js  # Logic for login validation & admin actions
+    │   └── statsController.js  # Logic for computing and returning analytics
+    │
+    ├── models
+    │   └── memberModel.js      # Defines data structure for members (ORM or raw SQL)
+    │
+    ├── database
+    │   ├── members.db          # SQLite or MongoDB collection
+    │   └── schema.sql          # SQL schema (if using relational DB)
+    │
+    ├── middleware
+    │   ├── authMiddleware.js   # Protects admin routes (token or session validation)
+    │   └── logger.js           # Optional request logging
+    │
+    └── utils
+        ├── db.js               # Database connection setup
+        └── helpers.js          # Reusable backend helper functions
+
+Section	Purpose
+/frontend/index.html	Where members register — public form.
+/frontend/admin-login.html	Password-protected admin login page.
+/frontend/admin-dashboard.html	Shows all members, charts (Chart.js), pictograms, and stats.
+/frontend/js/form.js	Saves new members to localStorage or sends to backend.
+/frontend/js/admin-dashboard.js	Pulls all members + creates charts, pictograms, and tables.
+/backend/routes/*	Defines all API endpoints (/register, /login, /stats).
+/backend/controllers/*	Handles business logic — clean separation from routes.
+/backend/database/*	Stores your data locally (SQLite) or connects to a cloud DB.
+
+🔹 Suggested Development Flow
+
+Frontend phase (prototype)
+
+Use localStorage to store member data and simulate admin login.
+
+Build form → dashboard → charts → pictograms.
+
+Backend phase (production)
+
+Replace localStorage with API endpoints.
+
+Connect to SQLite/MySQL/MongoDB.
+
+Add real authentication (JWT or sessions).
+
+Styling phase
+
+Use style.css for global UI.
+
+Use admin.css for dashboard grid layout and visuals.
+
+Use form.css for clean input forms.
