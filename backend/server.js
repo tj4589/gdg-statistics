@@ -9,6 +9,9 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 // Serve frontend files
 app.use(express.static(path.join(__dirname, "../public")));
 
@@ -17,9 +20,6 @@ app.get("*", (req, res) => {
 });
 // Load environment variables
 dotenv.config();
-
-const app = express();
-const PORT = process.env.PORT || 5000;
 
 // --- Middleware ---
 app.use(cors());
