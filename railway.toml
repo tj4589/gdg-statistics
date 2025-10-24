@@ -2,4 +2,4 @@
 root = "backend"
 
 [deploy]
-startCommand = "cd backend && npm start"
+startCommand = "node server.js"
