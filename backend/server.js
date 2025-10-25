@@ -3,18 +3,27 @@ dotenv.config({ path: "./.env" });
 
 import express from "express";
 import mongoose from "mongoose";
-import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// --- Middleware ---
-app.use(
-  cors({
-    origin: "https://gdg-registration-form.netlify.app",
-    methods: ["GET", "POST", "DELETE", "OPTIONS"],
-  })
-);
+// --- Manual CORS Middleware ---
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://gdg-registration-form.netlify.app" // Or '*' for all origins
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Handle preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
 app.use(express.json());
 
 // --- Connect to MongoDB ---
@@ -70,21 +79,18 @@ app.delete("/api/members/:id", async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.json({
-    status: "✅ Server is running successfully!",
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || "development",
-  });
-});
+// --- Health & test routes ---
+app.get("/", (req, res) =>
+  res.json({ status: "✅ Server running", timestamp: new Date().toISOString() })
+);
 
-app.get("/health", (req, res) => {
+app.get("/health", (req, res) =>
   res.json({
     status: "healthy",
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
-  });
-});
+  })
+);
 
 app.get("/test-db", async (req, res) => {
   try {
