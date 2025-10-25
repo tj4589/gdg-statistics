@@ -21,6 +21,12 @@ const PORT = process.env.PORT || 5000;
 // Load environment variables
 
 // --- Middleware ---
+app.use(
+  cors({
+    origin: "https://gdg-registration-form.netlify.app",
+    methods: ["GET", "POST", "DELETE", "OPTIONS"],
+  })
+);
 app.use(cors());
 app.use(express.json());
 
