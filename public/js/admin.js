@@ -9,7 +9,9 @@ const API_BASE_URL = "https://gdg-statistics.onrender.com";
 async function loadMembers() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/members`);
-    members = await res.json();
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error("Invalid data received");
+    members = data;
     displayMembers();
   } catch (error) {
     console.error("Error fetching members:", error);
