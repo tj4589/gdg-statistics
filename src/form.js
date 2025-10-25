@@ -23,7 +23,7 @@ form.addEventListener("submit", async (e) => {
   try {
     // ✅ Send data to backend (instead of saving to localStorage)
     const res = await fetch(
-      "https://https://gdg-statistics-production.up.railway.app/api/members",
+      "https://gdg-statistics-production.up.railway.app/api/members",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
