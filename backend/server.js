@@ -1,24 +1,12 @@
-// backend/server.js
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "./.env" });
+
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-// import { fileURLToPath } from "url";
-dotenv.config({ path: "./.env" });
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// // Serve frontend files
-// app.use(express.static(path.join(__dirname, "../public")));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../index.html"));
-// });
-// Load environment variables
 
 // --- Middleware ---
 app.use(
@@ -27,17 +15,13 @@ app.use(
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
   })
 );
-app.use(cors());
 app.use(express.json());
 
 // --- Connect to MongoDB ---
 console.log("MONGODB_URI:", process.env.MONGODB_URI);
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose
-  .connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -52,8 +36,6 @@ const memberSchema = new mongoose.Schema({
 const Member = mongoose.model("Member", memberSchema);
 
 // --- API Routes ---
-
-// POST → Register new member
 app.post("/api/members", async (req, res) => {
   try {
     const member = new Member(req.body);
@@ -65,7 +47,6 @@ app.post("/api/members", async (req, res) => {
   }
 });
 
-// GET → Get all members
 app.get("/api/members", async (req, res) => {
   try {
     const members = await Member.find();
@@ -78,16 +59,13 @@ app.get("/api/members", async (req, res) => {
 
 app.delete("/api/members/:id", async (req, res) => {
   try {
-    const id = req.params.id.trim(); // ✅ fix: no destructuring
+    const id = req.params.id.trim();
     const deletedMember = await Member.findByIdAndDelete(id);
-
-    if (!deletedMember) {
+    if (!deletedMember)
       return res.status(404).json({ message: "Member not found" });
-    }
-
     res.json({ message: "✅ Member deleted successfully" });
   } catch (error) {
-    console.error("❌ Backend error deleting member:", error);
+    console.error(error);
     res.status(500).json({ message: "❌ Error deleting member" });
   }
 });
@@ -100,7 +78,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// Health check endpoint for Render
 app.get("/health", (req, res) => {
   res.json({
     status: "healthy",
@@ -114,10 +91,11 @@ app.get("/test-db", async (req, res) => {
     const count = await Member.countDocuments();
     res.json({ status: "✅ DB connected", count });
   } catch (err) {
-    console.error("❌ DB test failed:", err);
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
+
 // --- Start server ---
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
