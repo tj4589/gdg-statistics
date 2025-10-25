@@ -5,7 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 // import { fileURLToPath } from "url";
-
+dotenv.config({ path: "./.env" });
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
@@ -25,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- Connect to MongoDB ---
+console.log("MONGODB_URI:", process.env.MONGODB_URI);
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose
   .connect(MONGODB_URI, {
