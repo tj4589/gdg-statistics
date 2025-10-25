@@ -8,6 +8,15 @@ import path from "path";
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
+app.get("/test-db", async (req, res) => {
+  try {
+    const count = await Member.countDocuments();
+    res.json({ status: "✅ DB connected", count });
+  } catch (err) {
+    console.error("❌ DB test failed:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
