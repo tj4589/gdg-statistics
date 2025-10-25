@@ -1,11 +1,9 @@
 // backend/server.js
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
-// import path from "path";
-
-dotenv.config();
 // import { fileURLToPath } from "url";
 
 // const __filename = fileURLToPath(import.meta.url);
