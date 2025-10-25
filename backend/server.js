@@ -3,20 +3,13 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import path from "path";
+// import path from "path";
+
+dotenv.config();
 // import { fileURLToPath } from "url";
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
-app.get("/test-db", async (req, res) => {
-  try {
-    const count = await Member.countDocuments();
-    res.json({ status: "✅ DB connected", count });
-  } catch (err) {
-    console.error("❌ DB test failed:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,7 +21,6 @@ const PORT = process.env.PORT || 5000;
 //   res.sendFile(path.join(__dirname, "../index.html"));
 // });
 // Load environment variables
-dotenv.config();
 
 // --- Middleware ---
 app.use(cors());
@@ -112,6 +104,15 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.get("/test-db", async (req, res) => {
+  try {
+    const count = await Member.countDocuments();
+    res.json({ status: "✅ DB connected", count });
+  } catch (err) {
+    console.error("❌ DB test failed:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 // --- Start server ---
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
