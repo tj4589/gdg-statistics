@@ -1,7 +1,7 @@
 // Handles registration form submission
 const form = document.getElementById("memberForm");
 
-const API_BASE_URL = "https://gdg-statistics-production.up.railway.app";
+const API_BASE_URL = "https://gdg-statistics-backend-production.up.railway.app";
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
