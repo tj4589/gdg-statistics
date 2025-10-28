@@ -23,28 +23,27 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-    // ✅ Send data to backend (instead of saving to localStorage)
     const res = await fetch(`${API_BASE_URL}/api/members`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newMember),
     });
 
-    if (!res.ok) throw new Error("Failed to register member");
-
-    const data = await res.json();
+    const data = await res.json(); // parse response before checking
 
     const msg = document.createElement("p");
     msg.textContent = data.message || "✅ Registration successful!";
-    msg.style.color = "green";
+    msg.style.color = res.ok ? "green" : "red"; // color based on success/failure
     form.appendChild(msg);
     setTimeout(() => msg.remove(), 3000);
+
+    if (!res.ok) return; // stop further execution if error
 
     form.reset();
   } catch (error) {
     console.error("Error:", error);
     const msg = document.createElement("p");
-    msg.textContent = "❌ Registration failed. Try again.";
+    msg.textContent = "❌ Network error. Please try again.";
     msg.style.color = "red";
     form.appendChild(msg);
     setTimeout(() => msg.remove(), 3000);
