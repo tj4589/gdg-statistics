@@ -28,7 +28,9 @@ app.use(express.json());
 
 // --- Connect to MongoDB ---
 console.log("MONGODB_URI:", process.env.MONGODB_URI);
-const MONGODB_URI = process.env.MONGODB_URI||"mongodb+srv://ekpokpobeoghenetejiri29_db_user:password45.@cluster0gdg.najqpg3.mongodb.net/membersDB?retryWrites=true&w=majority";
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  "mongodb+srv://ekpokpobeoghenetejiri29_db_user:password45.@cluster0gdg.najqpg3.mongodb.net/membersDB?retryWrites=true&w=majority";
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("✅ MongoDB Connected"))
@@ -36,10 +38,10 @@ mongoose
 
 // --- Schema and Model ---
 const memberSchema = new mongoose.Schema({
-  name: String,
-  phone: String,
-  track: String,
-  date: String,
+  name: { type: String, required: true },
+  phone: { type: String, required: true, unique: true },
+  track: { type: String },
+  date: { type: String },
 });
 
 const Member = mongoose.model("Member", memberSchema);
@@ -47,11 +49,20 @@ const Member = mongoose.model("Member", memberSchema);
 // --- API Routes ---
 app.post("/api/members", async (req, res) => {
   try {
+    const { name, phone, track, date } = req.body;
+
+    // Check if phone number already exists
+    const existingMember = await Member.findOne({ phone });
+    if (existingMember) {
+      return res
+        .status(400)
+        .json({ message: "❌ Phone number already registered!" });
+    }
     const member = new Member(req.body);
     await member.save();
     res.json({ message: "✅ Member saved successfully!" });
   } catch (error) {
-    console.error(error);
+    console.error("Error saving member: ", error);
     res.status(500).json({ message: "❌ Error saving member" });
   }
 });
