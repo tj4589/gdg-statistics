@@ -5,7 +5,6 @@ let members = [];
 
 const API_BASE_URL = "https://gdg-statistics-backend-production.up.railway.app";
 
-
 // ✅ Fetch members from backend instead of localStorage
 async function loadMembers() {
   try {
