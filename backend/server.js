@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({ path: "./.env" });
+dotenv.config();
 
 import express from "express";
 import mongoose from "mongoose";
@@ -27,10 +27,10 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // --- Connect to MongoDB ---
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
+// console.log("MONGODB_URI:", process.env.MONGODB_URI);
 const MONGODB_URI = process.env.MONGODB_URI;
 mongoose
-  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGODB_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
