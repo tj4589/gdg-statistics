@@ -3,6 +3,27 @@ const form = document.getElementById("memberForm");
 
 const API_BASE_URL = "https://gdg-statistics-backend-production.up.railway.app";
 
+const phone = form.phone.value.trim();
+phone = phone.replace(/\D/g, "");
+
+if (!/^\d{11}$/.test(phone)) {
+  const msg = document.createElement("p");
+  msg.textContent = "❌ Phone number must be exactly 11 digits long.";
+  msg.style.color = "red";
+  form.appendChild(msg);
+  setTimeout(() => msg.remove(), 3000);
+  return;
+}
+
+if (!/^\d{11}$/.test(phone)) {
+  const msg = document.createElement("p");
+  msg.textContent = data.message || "Phone number must be 11 digitds longs.";
+  msg.style.color = "red";
+  form.appendChild(msg);
+  setTimeout(() => msg.remove(), 3000);
+  return;
+}
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
