@@ -3,27 +3,25 @@ const form = document.getElementById("memberForm");
 
 const API_BASE_URL = "https://gdg-statistics-backend-production.up.railway.app";
 
-let phone = form.phone.value.trim();
-phone = phone.replace(/\D/g, "");
-
-if (!/^\d{11}$/.test(phone)) {
-  const msg = document.createElement("p");
-  msg.textContent = data.message || "Phone number must be 11 digitds longs.";
-  msg.style.color = "red";
-  form.appendChild(msg);
-  setTimeout(() => msg.remove(), 3000);
-}
-
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = form.name.value.trim();
   const phone = form.phone.value.trim();
+  phone = phone.replace(/\D/g, "");
   const track = form.track.value;
 
   const requiredFields = [form.name, form.phone, form.track];
   if (requiredFields.some((f) => !f.value.trim())) {
     return alert("Please fill in all required fields!");
+  }
+
+  if (!/^\d{11}$/.test(phone)) {
+    const msg = document.createElement("p");
+    msg.textContent = data.message || "Phone number must be 11 digitds longs.";
+    msg.style.color = "red";
+    form.appendChild(msg);
+    setTimeout(() => msg.remove(), 3000);
   }
 
   const newMember = {
