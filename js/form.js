@@ -3,7 +3,7 @@ const form = document.getElementById("memberForm");
 
 const API_BASE_URL = "https://gdg-statistics-backend-production.up.railway.app";
 
-const phone = form.phone.value.trim();
+let phone = form.phone.value.trim();
 phone = phone.replace(/\D/g, "");
 
 if (!/^\d{11}$/.test(phone)) {
