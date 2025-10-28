@@ -7,7 +7,7 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = form.name.value.trim();
-  const phone = form.phone.value.trim();
+  let phone = form.phone.value.trim();
   phone = phone.replace(/\D/g, "");
   const track = form.track.value;
 
@@ -18,10 +18,11 @@ form.addEventListener("submit", async (e) => {
 
   if (!/^\d{11}$/.test(phone)) {
     const msg = document.createElement("p");
-    msg.textContent = data.message || "Phone number must be 11 digitds longs.";
+    msg.textContent = "Phone number must be 11 digitds longs.";
     msg.style.color = "red";
     form.appendChild(msg);
     setTimeout(() => msg.remove(), 3000);
+    return;
   }
 
   const newMember = {
