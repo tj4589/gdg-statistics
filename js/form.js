@@ -1,10 +1,13 @@
 // Handles registration form submission
 const form = document.getElementById("memberForm");
+const overlay = document.getElementById("loadingOverlay");
 
 const API_BASE_URL = "https://gdg-statistics-backend-production.up.railway.app";
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  overlay.classList.add("active");
 
   const name = form.name.value.trim();
   let phone = form.phone.value.trim();
@@ -57,5 +60,7 @@ form.addEventListener("submit", async (e) => {
     msg.style.color = "red";
     form.appendChild(msg);
     setTimeout(() => msg.remove(), 3000);
+  } finally {
+    overlay.classList.remove("active");
   }
 });
